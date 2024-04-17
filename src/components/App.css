@@ -160,9 +160,14 @@ input::placeholder {
 }
 
 @media (max-width: 1280px) {
+    .background {
+        width: 200%;
+    }
+
     .header {
         height: 10%;
         font-size: 3.5vmin;
+        border-radius: 0 25px 0 25px;
     }
 
     .locationBox,
@@ -172,6 +177,10 @@ input::placeholder {
 }
 
 @media (max-width: 600px) {
+    .background {
+        width: 300%;
+    }
+
     .header {
         margin-top: 10%;
         height: 8%;
@@ -202,5 +211,11 @@ input::placeholder {
     
     .weatherBox .weather {
         font-size: 7vmin;
+    }
+
+    .errWrap {
+        width: 90%;
+        height: 35%;
+        margin-top: 20%
     }
 }

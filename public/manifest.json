@@ -1,6 +1,6 @@
 {
-  "short_name": "Weather App",
-  "name": "Weather App",
+  "short_name": "Weather Now",
+  "name": "Weather Now",
   "icons": [
     {
       "src": "assets/logo.svg",

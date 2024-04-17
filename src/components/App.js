@@ -9,7 +9,7 @@ export const App = () => {
   const [idError, setIdError] = useState(-1);
   const fetchProxyAPI = async () => {
     try {
-      let resp = await axios.post('http://localhost:5000/api/lite/weather', { city: cityName });
+      let resp = await axios.post('https://dora-api.tech/api/lite/weather', { city: cityName });
       resp.data.state === 200? setWeatherData(resp.data.data) : setIsError(true); setIdError(resp.data.state);
     } catch(e) { if (e.response && e.response.status) { setIdError(e.response.status) } else { setIdError(599) } setIsError(true) }
   }
