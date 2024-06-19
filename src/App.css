@@ -1,5 +1,5 @@
 /* Fonts */
-@import url('../fonts/Fonts.css');
+@import url('./Fonts.css');
 
 /* Document */
 :root, input {
@@ -42,7 +42,7 @@ body {
     height: 100%;
     pointer-events: none;
 
-    background-image: url("../../public/assets/1.jpg");
+    background-image: url("../public/assets/1.jpg");
     background-size: 100% 100%;
     animation: bg-zoom infinite 40s linear alternate;
     transition: background-image 150ms linear;
@@ -51,13 +51,13 @@ body {
 }
 
 .background.heap {
-    background-image: url("../../public/assets/2.jpg");
+    background-image: url("../public/assets/2.jpg");
     transition: background-image 150ms linear;
     opacity: 0.8;
 }
 
 .background.cold {
-    background-image: url("../../public/assets/3.jpg");
+    background-image: url("../public/assets/3.jpg");
     transition: background-image 150ms linear;
     opacity: 0.8;
 }
@@ -74,6 +74,7 @@ input::placeholder {
 }
 
 .header {
+    
     width: 70%;
     height: 5%;
     margin-top: 3%;
@@ -183,7 +184,7 @@ input::placeholder {
 
     .header {
         margin-top: 10%;
-        height: 8%;
+        height: 70px;
         width: 90%;
         font-size: 6.5vmin;
     }

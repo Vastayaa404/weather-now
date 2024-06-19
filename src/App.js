@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -7,18 +7,30 @@ export const App = () => {
   const [weatherData, setWeatherData] = useState({});
   const [isError, setIsError] = useState(false);
   const [idError, setIdError] = useState(-1);
+
+  const useThrottledCallback = (callback, delay) => {
+    const lastCallTimeRef = useRef(Date.now());
+    const throttledCallback = useCallback((...args) => {
+      const now = Date.now(); if (now - lastCallTimeRef.current >= delay) { lastCallTimeRef.current = now; callback(...args) } }, [callback, delay]);
+    return throttledCallback;
+  };
+
   const fetchProxyAPI = async () => {
     try {
       let resp = await axios.post('https://dora-api.tech/api/lite/weather', { city: cityName });
-      resp.data.state === 200? setWeatherData(resp.data.data) : setIsError(true); setIdError(resp.data.state);
-    } catch(e) { if (e.response && e.response.status) { setIdError(e.response.status) } else { setIdError(599) } setIsError(true) }
-  }
+      resp.data.state === 200 ? [setIsError(false), setWeatherData(resp.data.data)] : setIsError(true); setIdError(resp.data.state);
+    } catch (e) { if (e.response && e.response.status) { setIdError(e.response.status); setIsError(true) } else { setIdError(599); setIsError(true) } } 
+  };
+
+  const throttledFetchProxyAPI = useThrottledCallback(fetchProxyAPI, 1500);
+
   const dateBuilder = () => {
     let d = new Date(), months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], day = days[d.getDay()], date = d.getDate(), month = months[d.getMonth()], year = d.getFullYear();
     return `${day}, ${date} ${month} ${year}`;
-  }
-  const onEnter = (e) => { if (e.keyCode === 13 && cityName.length > 1) { fetchProxyAPI() } else { setWeatherData("undefined"); setIsError(false) } };
+  };
+
+  const onEnter = (e) => { if (e.keyCode === 13 && cityName.length > 1) { throttledFetchProxyAPI() } else { setWeatherData("undefined"); setIsError(false) } };
 
   return (
     <div className="wrapper">
