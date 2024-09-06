@@ -16,10 +16,10 @@ export const App = () => {
   };
 
   const fetchProxyAPI = async () => {
-    try {
-      let resp = await axios.post('https://dora-api.tech/api/lite/weather', { city: cityName });
-      resp.data.state === 200 ? [setIsError(false), setWeatherData(resp.data.data)] : setIsError(true); setIdError(resp.data.state);
-    } catch (e) { if (e.response && e.response.status) { setIdError(e.response.status); setIsError(true) } else { setIdError(599); setIsError(true) } } 
+    try { 
+      const resp = await axios.post('http://localhost:5000/services/weather', { city: cityName }); setIsError(resp.data.code !== 200 && resp.data.code !== 304); setIdError(resp.data.code); 
+      if (resp.data.code === 200 || resp.data.code === 304) { setWeatherData(resp.data.data) }
+    } catch (e) { setIdError(e.response && e.response.status ? e.response.status : 599); setIsError(true) }
   };
 
   const throttledFetchProxyAPI = useThrottledCallback(fetchProxyAPI, 1500);
